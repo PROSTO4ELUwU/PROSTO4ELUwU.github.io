@@ -297,46 +297,35 @@
                 console.error('Failed to copy: ', err);
             });
         }
-
-        const viewDisplay = document.getElementById('view-counter');
-
-        function localCounter() {
-            let views = localStorage.getItem('profile_views');
-            if (!views) views = 0;
-            else views = parseInt(views) + 1;
-            localStorage.setItem('profile_views', views);
-            viewDisplay.textContent = views;
-        }
-        
-        localCounter(); 
     </script>
     
     <script type="module">
-        // import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        // import { getDatabase, ref, onValue, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, onValue, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        // const firebaseConfig = {
-        //     apiKey: "AIzaSyDxxxx...",
-        //     authDomain: "your-project.firebaseapp.com",
-        //     databaseURL: "https://your-project-default-rtdb.firebaseio.com",
-        //     projectId: "your-project",
-        //     storageBucket: "your-project.appspot.com",
-        //     messagingSenderId: "123456...",
-        //     appId: "1:123456..."
-        // };
+        const firebaseConfig = {
+            apiKey: "AIzaSyA0HhKXfDYR-7FwnvK_BexIowuR1d90UGQ",
+            authDomain: "bio-link-stats.firebaseapp.com",
+            databaseURL: "https://bio-link-stats-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "bio-link-stats",
+            storageBucket: "bio-link-stats.firebasestorage.app",
+            messagingSenderId: "491880740090",
+            appId: "1:491880740090:web:cbe1c684c360d2c8f6c543",
+            measurementId: "G-66FBPQ1KWM"
+        };
 
-        // const app = initializeApp(firebaseConfig);
-        // const db = getDatabase(app);
-        // const viewsRef = ref(db, 'views');
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const viewsRef = ref(db, 'views');
 
-        // runTransaction(viewsRef, (currentViews) => {
-        //     return (currentViews || 0) + 1;
-        // });
+        runTransaction(viewsRef, (currentViews) => {
+            return (currentViews || 0) + 1;
+        });
 
-        // onValue(viewsRef, (snapshot) => {
-        //     const data = snapshot.val();
-        //     document.getElementById('view-counter').textContent = data || 0;
-        // });
+        onValue(viewsRef, (snapshot) => {
+            const data = snapshot.val();
+            document.getElementById('view-counter').textContent = data || 0;
+        });
     </script>
 </body>
 </html>
