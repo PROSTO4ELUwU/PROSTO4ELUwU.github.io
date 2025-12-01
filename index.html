@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROSTO_4EL(UwU)</title>
+    <meta name="description" content="Bio Link PROSTO_4EL(UwU)">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <style>
+        body {
+            background-color: #050505;
+            font-family: 'JetBrains Mono', monospace;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        * {
+            cursor: default;
+        }
+        a, .cursor-pointer {
+            cursor: pointer;
+        }
+
+        ::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes gradient-text {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .text-glow {
+            text-shadow: 0 0 10px rgba(167, 139, 250, 0.5), 0 0 20px rgba(167, 139, 250, 0.3);
+        }
+
+        @keyframes scaleIn {
+            0% { opacity: 0; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .scale-in-enter {
+            animation: scaleIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        .tooltip {
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+            transform: translateY(10px);
+        }
+        .group:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .cursor-blink {
+            border-right: 2px solid #a78bfa;
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            0%, 100% { border-color: transparent; }
+            50% { border-color: #a78bfa; }
+        }
+        
+        .vertical-gradient-text {
+            background: linear-gradient(to bottom, #e9d5ff, #581c87);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="text-white h-screen w-screen flex flex-col items-center justify-center relative">
+
+    <canvas id="starfield" class="fixed top-0 left-0 w-full h-full z-0 pointer-events-none"></canvas>
+
+    <div id="overlay" class="fixed top-0 left-0 w-full h-full bg-[#050505] z-50 flex flex-col items-center justify-center cursor-pointer transition-opacity duration-700">
+        <p class="text-white/80 text-lg animate-pulse">Тыкни чтоб зайти.</p>
+    </div>
+
+    <main id="content" class="hidden relative z-10 w-full max-w-md px-4">
+        
+        <div class="relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 shadow-2xl flex flex-col items-center text-center overflow-hidden">
+            
+            <div class="absolute top-[-50px] left-1/2 -translate-x-1/2 w-32 h-32 bg-purple-600/40 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="relative mb-4 animate-float">
+                <div class="absolute inset-0 bg-purple-600 rounded-full blur-md opacity-60 scale-105"></div>
+                
+                <div class="relative w-28 h-28 rounded-full p-1 bg-gradient-to-tr from-gray-800 to-gray-900">
+                    <img src="https://i.pinimg.com/736x/58/c3/d8/58c3d81852cc91b8d564534ee53e719a.jpg" 
+                         alt="Avatar" 
+                         class="w-full h-full rounded-full object-cover border-2 border-white/10">
+                </div>
+
+                <div class="group absolute bottom-1 right-1 cursor-help z-20">
+                    <div class="w-7 h-7 bg-gradient-to-tr from-purple-600 to-pink-500 rounded-full flex items-center justify-center border-2 border-[#050505] shadow-lg transition-all duration-300 group-hover:scale-125 group-hover:rotate-12">
+                        <i class="fas fa-check text-white text-[10px]"></i>
+                    </div>
+                    <div class="tooltip absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-black/80 border border-white/10 px-2 py-1 rounded text-xs whitespace-nowrap backdrop-blur-sm">
+                        Тот самый.
+                    </div>
+                </div>
+            </div>
+
+            <h1 class="text-3xl font-bold vertical-gradient-text text-glow mb-4 tracking-wide">
+                PROSTO_4EL(UwU)
+            </h1>
+
+            <div class="flex gap-3 mb-6">
+                <div class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-xs text-gray-300 backdrop-blur-md shadow-sm hover:bg-white/10 transition-colors cursor-default">
+                    UID: 1337
+                </div>
+                <div class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-xs text-gray-300 backdrop-blur-md shadow-sm hover:bg-white/10 transition-colors cursor-default">
+                    16 ЛЕТ
+                </div>
+            </div>
+
+            <div class="h-6 mb-8 text-sm text-gray-400 font-mono">
+                <span id="typewriter"></span><span class="cursor-blink">&nbsp;</span>
+            </div>
+
+            <div class="flex gap-6 text-2xl mb-8 w-full justify-center">
+                
+                <div class="relative group">
+                    <button onclick="copyDiscord()" class="text-gray-400 hover:text-[#5865F2] transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_10px_rgba(88,101,242,0.6)]">
+                        <i class="fab fa-discord"></i>
+                    </button>
+                    <div id="discord-toast" class="absolute -top-10 left-1/2 -translate-x-1/2 bg-[#5865F2] text-white text-xs px-2 py-1 rounded opacity-0 transition-opacity duration-300 pointer-events-none whitespace-nowrap">
+                        Скопировано!
+                    </div>
+                </div>
+
+                <a href="https://t.me/PROSTO_4ELUwU" target="_blank" class="text-gray-400 hover:text-[#229ED9] transition-all duration-300 hover:scale-110 hover:drop-shadow-[0_0_10px_rgba(34,158,217,0.6)]">
+                    <i class="fab fa-telegram"></i>
+                </a>
+
+            </div>
+
+            <div class="flex items-center gap-2 text-xs text-gray-500 border-t border-white/5 pt-4 w-full justify-center">
+                <i class="fas fa-eye"></i>
+                <span id="view-counter">0</span>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="fixed bottom-4 text-[10px] text-gray-600 z-10 text-center w-full">
+        made by PROSTO_4EL(UwU) • 2025
+    </footer>
+
+    <script>
+        const canvas = document.getElementById('starfield');
+        const ctx = canvas.getContext('2d');
+        let stars = [];
+        let width, height;
+
+        function resize() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+            initStars();
+        }
+
+        function initStars() {
+            stars = [];
+            const starCount = Math.floor((width * height) / 4000);
+            for (let i = 0; i < starCount; i++) {
+                stars.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    radius: Math.random() * 1.5,
+                    speed: Math.random() * 0.5 + 0.1,
+                    alpha: Math.random(),
+                    twinkleSpeed: Math.random() * 0.02 + 0.005
+                });
+            }
+        }
+
+        function animateStars() {
+            ctx.clearRect(0, 0, width, height);
+            ctx.fillStyle = '#050505';
+            ctx.fillRect(0, 0, width, height);
+
+            stars.forEach(star => {
+                star.y -= star.speed;
+                if (star.y < 0) {
+                    star.y = height;
+                    star.x = Math.random() * width;
+                }
+
+                star.alpha += star.twinkleSpeed;
+                if (star.alpha > 1 || star.alpha < 0.2) {
+                    star.twinkleSpeed = -star.twinkleSpeed;
+                }
+
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${Math.abs(star.alpha)})`;
+                ctx.fill();
+            });
+
+            requestAnimationFrame(animateStars);
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+        animateStars();
+
+
+        const overlay = document.getElementById('overlay');
+        const content = document.getElementById('content');
+        const body = document.body;
+
+        overlay.addEventListener('click', () => {
+            overlay.style.opacity = '0';
+            overlay.style.pointerEvents = 'none';
+            
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                content.classList.remove('hidden');
+                content.classList.add('scale-in-enter');
+                body.style.overflow = 'auto';
+            }, 600);
+        });
+
+
+        const typewriterText = document.getElementById('typewriter');
+        const phrases = ["Программист", "1337", "Упал?", "Ladno..."];
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typeSpeed = 100;
+
+        function type() {
+            const currentPhrase = phrases[phraseIndex];
+            
+            if (isDeleting) {
+                typewriterText.textContent = currentPhrase.substring(0, charIndex - 1);
+                charIndex--;
+                typeSpeed = 50;
+            } else {
+                typewriterText.textContent = currentPhrase.substring(0, charIndex + 1);
+                charIndex++;
+                typeSpeed = 100;
+            }
+
+            if (!isDeleting && charIndex === currentPhrase.length) {
+                isDeleting = true;
+                typeSpeed = 2000;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                typeSpeed = 500;
+            }
+
+            setTimeout(type, typeSpeed);
+        }
+
+        setTimeout(type, 1000);
+
+
+        function copyDiscord() {
+            const discordUser = "prosto_4eluwu";
+            navigator.clipboard.writeText(discordUser).then(() => {
+                const toast = document.getElementById('discord-toast');
+                toast.style.opacity = '1';
+                toast.style.top = '-40px';
+                
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    toast.style.top = '-30px';
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+
+        const viewDisplay = document.getElementById('view-counter');
+
+        function localCounter() {
+            let views = localStorage.getItem('profile_views');
+            if (!views) views = 0;
+            else views = parseInt(views) + 1;
+            localStorage.setItem('profile_views', views);
+            viewDisplay.textContent = views;
+        }
+        
+        localCounter(); 
+    </script>
+    
+    <script type="module">
+        // import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        // import { getDatabase, ref, onValue, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        // const firebaseConfig = {
+        //     apiKey: "AIzaSyDxxxx...",
+        //     authDomain: "your-project.firebaseapp.com",
+        //     databaseURL: "https://your-project-default-rtdb.firebaseio.com",
+        //     projectId: "your-project",
+        //     storageBucket: "your-project.appspot.com",
+        //     messagingSenderId: "123456...",
+        //     appId: "1:123456..."
+        // };
+
+        // const app = initializeApp(firebaseConfig);
+        // const db = getDatabase(app);
+        // const viewsRef = ref(db, 'views');
+
+        // runTransaction(viewsRef, (currentViews) => {
+        //     return (currentViews || 0) + 1;
+        // });
+
+        // onValue(viewsRef, (snapshot) => {
+        //     const data = snapshot.val();
+        //     document.getElementById('view-counter').textContent = data || 0;
+        // });
+    </script>
+</body>
+</html>
